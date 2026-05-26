@@ -1,0 +1,32 @@
+[
+    {
+        "model": "training.lessonfile",
+        "pk": 1,
+        "fields": {
+            "lesson": 2,
+            "title": "fix.txt",
+            "file": "lesson_files/fix.txt",
+            "uploaded_at": "2026-05-14T10:30:35.674Z"
+        }
+    },
+    {
+        "model": "training.lessonfile",
+        "pk": 2,
+        "fields": {
+            "lesson": 25,
+            "title": "test.txt",
+            "file": "lesson_files/test.txt",
+            "uploaded_at": "2026-05-21T08:28:02.550Z"
+        }
+    },
+    {
+        "model": "training.lessonfile",
+        "pk": 3,
+        "fields": {
+            "lesson": 25,
+            "title": "fix.txt",
+            "file": "lesson_files/fix_Tb5UsKc.txt",
+            "uploaded_at": "2026-05-21T08:41:52.158Z"
+        }
+    }
+]

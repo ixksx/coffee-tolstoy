@@ -1,0 +1,11 @@
+[
+    {
+        "model": "training.lessonimage",
+        "pk": 1,
+        "fields": {
+            "lesson": 25,
+            "image": "lesson_images/cook1.png",
+            "caption": ""
+        }
+    }
+]

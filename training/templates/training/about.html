@@ -1,0 +1,104 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}О нас – Толстой Coffee{% endblock %}
+
+{% block content %}
+<div class="about-page">
+ 
+    <section class="about-hero">
+        <div class="about-hero-content">
+            <div class="about-logo-large">
+                <img src="{% static "images/logo.svg" %}" class="logo-img-banner">
+                <span class="logo-text xlarge">Толстой</span>
+            </div>
+            <p class="about-motto">«Каждая чашка — маленькое произведение искусства»</p>
+        </div>
+    </section>
+
+
+    <section class="about-collage-section">
+        <h2 class="section-title center">Наша команда</h2>
+        <div class="collage-grid">
+            <div class="collage-item collage-large">
+                <div class="collage-placeholder1">
+                </div>
+            </div>
+            <div class="collage-item">
+                <div class="collage-placeholder2">
+                </div>
+            </div>
+            <div class="collage-item">
+                <div class="collage-placeholder3">
+                </div>
+            </div>
+            <div class="collage-item">
+                <div class="collage-placeholder4">
+                </div>
+            </div>
+            <div class="collage-item collage-wide">
+                <div class="collage-placeholder5">
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="about-benefits-section">
+        <h2 class="section-title center">Основные плюсы обучения</h2>
+        <div class="slider-container">
+            <button class="slider-btn slider-prev" onclick="slideChange(-1)">‹</button>
+            <div class="slider-track" id="sliderTrack">
+                {% for benefit in benefits %}
+                <div class="slider-slide {% if forloop.first %}active{% endif %}">
+                    <img src="{% static benefit.icon %}" alt="{{ benefit.title }}" class="benefit-image">
+                    <h3 class="benefit-title">{{ benefit.title }}</h3>
+                    <p class="benefit-desc">{{ benefit.description }}</p>
+                </div>
+                {% endfor %}
+            </div>
+            <button class="slider-btn slider-next" onclick="slideChange(1)">›</button>
+        </div>
+   
+        <div class="slider-dots" id="sliderDots">
+            {% for benefit in benefits %}
+            <span class="slider-dot {% if forloop.first %}active{% endif %}" onclick="goToSlide({{ forloop.counter0 }})"></span>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slider-slide');
+    const dots = document.querySelectorAll('.slider-dot');
+    const totalSlides = slides.length;
+
+    function showSlide(index) {
+
+        slides.forEach(function(s) { s.classList.remove('active'); });
+        dots.forEach(function(d) { d.classList.remove('active'); });
+ 
+        currentSlide = (index + totalSlides) % totalSlides;
+        slides[currentSlide].classList.add('active');
+        dots[currentSlide].classList.add('active');
+    }
+
+    function slideChange(direction) {
+        showSlide(currentSlide + direction);
+    }
+
+    function goToSlide(index) {
+        showSlide(index);
+    }
+
+
+    setInterval(function() {
+        slideChange(1);
+    }, 10000);
+</script>
+{% endblock %}

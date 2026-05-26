@@ -1,0 +1,128 @@
+[
+    {
+        "model": "testing.question",
+        "pk": 1,
+        "fields": {
+            "test": 1,
+            "text": "В каком году была основана кофейня «Толстой»?",
+            "order": 1
+        }
+    },
+    {
+        "model": "testing.question",
+        "pk": 2,
+        "fields": {
+            "test": 1,
+            "text": "Какой стандарт обслуживания используется в кофейне?",
+            "order": 2
+        }
+    },
+    {
+        "model": "testing.question",
+        "pk": 3,
+        "fields": {
+            "test": 1,
+            "text": "За сколько минут до открытия нужно прийти на смену?",
+            "order": 3
+        }
+    },
+    {
+        "model": "testing.question",
+        "pk": 4,
+        "fields": {
+            "test": 1,
+            "text": "Какое максимальное время приготовления эспрессо-напитка?",
+            "order": 4
+        }
+    },
+    {
+        "model": "testing.question",
+        "pk": 21,
+        "fields": {
+            "test": 7,
+            "text": "Как часто нужно мыть руки на кухне?",
+            "order": 1
+        }
+    },
+    {
+        "model": "testing.question",
+        "pk": 22,
+        "fields": {
+            "test": 7,
+            "text": "Какой признак свежего круассана?",
+            "order": 2
+        }
+    },
+    {
+        "model": "testing.question",
+        "pk": 23,
+        "fields": {
+            "test": 7,
+            "text": "При какой температуре хранить скоропортящиеся продукты?",
+            "order": 3
+        }
+    },
+    {
+        "model": "testing.question",
+        "pk": 24,
+        "fields": {
+            "test": 7,
+            "text": "Чем украшают чизкейк в «Толстом»?",
+            "order": 4
+        }
+    },
+    {
+        "model": "testing.question",
+        "pk": 25,
+        "fields": {
+            "test": 7,
+            "text": "Что НЕ входит в личную гигиену повара?",
+            "order": 5
+        }
+    },
+    {
+        "model": "testing.question",
+        "pk": 26,
+        "fields": {
+            "test": 8,
+            "text": "Какой прибор используют для обжарки сэндвича?",
+            "order": 1
+        }
+    },
+    {
+        "model": "testing.question",
+        "pk": 27,
+        "fields": {
+            "test": 8,
+            "text": "Когда заправляют салат?",
+            "order": 2
+        }
+    },
+    {
+        "model": "testing.question",
+        "pk": 28,
+        "fields": {
+            "test": 8,
+            "text": "Сколько времени можно хранить суп дня?\t",
+            "order": 3
+        }
+    },
+    {
+        "model": "testing.question",
+        "pk": 29,
+        "fields": {
+            "test": 8,
+            "text": "Минимальная температура подачи супа?",
+            "order": 4
+        }
+    },
+    {
+        "model": "testing.question",
+        "pk": 30,
+        "fields": {
+            "test": 8,
+            "text": "Как НЕЛЬЗЯ разогревать суп?",
+            "order": 4
+        }
+    }
+]

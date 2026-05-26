@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Программы обучения – Панель управления{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="arrow-block">
+        <a href="{% url 'dashboard:index' %}" class="back-link"><img src="{% static "images/arrow-left.svg" %}" class="icon-img">Назад к панели управлениия</a>
+    </div>
+    <h1 class="page-title">Программы обучения</h1>
+
+    <div class="programs-grid">
+        {% for program in programs %}
+        <div class="program-card">
+            <div class="program-card-number">{{ program.order }}</div>
+            {% if program.image %}
+            <img src="{{ program.image.url }}" alt="{{ program.name }}" class="program-card-image">
+            {% endif %}
+            <div class="program-card-body">
+                <h3>{{ program.name }}</h3>
+                <p class="program-role">Роль: {{ program.get_role_display }}</p>
+                <p>{{ program.description }}</p>
+                <p class="program-modules-count">Модулей: {{ program.modules.count }}</p>
+                <div class="program-card-actions">
+                    <a href="{% url 'dashboard:program_edit' program.id %}" class="btn btn-outline btn-sm">Редактировать</a>
+                    <a href="{% url 'dashboard:module_create' program.id %}" class="btn btn-primary btn-sm">+ Модуль</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="empty-state">
+            <p class="empty-text">Программы пока не добавлены</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if page_obj.has_other_pages %}
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}" class="pagination-btn pagination-prev">← Назад</a>
+        {% else %}
+        <span class="pagination-btn pagination-prev disabled">← Назад</span>
+        {% endif %}
+
+        <div class="pagination-numbers">
+            {% if page_obj.number > 2 %}
+            <a href="?page=1" class="pagination-num">1</a>
+            {% if page_obj.number > 3 %}
+            <span class="pagination-dots">...</span>
+            {% endif %}
+            {% endif %}
+
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}" class="pagination-num">{{ page_obj.previous_page_number }}</a>
+            {% endif %}
+
+            <span class="pagination-num active">{{ page_obj.number }}</span>
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="pagination-num">{{ page_obj.next_page_number }}</a>
+            {% endif %}
+
+            {% if page_obj.number < page_obj.paginator.num_pages|add:-1 %}
+            {% if page_obj.number < page_obj.paginator.num_pages|add:-2 %}
+            <span class="pagination-dots">...</span>
+            {% endif %}
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="pagination-num">{{ page_obj.paginator.num_pages }}</a>
+            {% endif %}
+        </div>
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}" class="pagination-btn pagination-next">Вперёд →</a>
+        {% else %}
+        <span class="pagination-btn pagination-next disabled">Вперёд →</span>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

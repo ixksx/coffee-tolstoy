@@ -1,0 +1,244 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ module.name }} – Толстой Coffee{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div class="arrow-block">
+        <a href="{% url 'training:modules' %}" class="back-link"><img src="{% static "images/arrow-left.svg" %}" class="icon-img"> Назад к модулям</a>
+    </div>
+    
+    <h1 class="page-title">{{ module.name }}</h1>
+
+    <div class="module-detail-content">
+        {% if module.image %}
+        <div class="module-detail-image">
+            <img src="{{ module.image.url }}" alt="{{ module.name }}">
+        </div>
+        {% endif %}
+        
+        <div class="module-detail-info">
+            {% if module.description %}
+            <div class="module-detail-section">
+                <h3 class="module-detail-label">Описание</h3>
+                <p class="module-detail-text">{{ module.description }}</p>
+            </div>
+            {% endif %}
+            
+            {% if module.goal %}
+            <div class="module-detail-section">
+                <h3 class="module-detail-label">Цель модуля</h3>
+                <p class="module-detail-text module-goal">{{ module.goal }}</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <section class="lessons-section">
+        <h2 class="section-title">Уроки</h2>
+        <div class="lessons-grid" id="lessons-grid">
+            {% for item in lessons %}
+            <div class="lesson-card {% if item.completed %}completed{% endif %}">
+                <div class="lesson-card-number">{{ item.lesson.number }}</div>
+                <div class="lesson-card-image">
+                    {% if item.completed %}
+                    <span class="lesson-card-status">Пройден</span>
+                    {% endif %}
+                    {% if item.lesson.image %}
+                    <img src="{{ item.lesson.image.url }}" alt="{{ item.lesson.title }}">
+                    {% else %}
+                    <div class="lesson-card-placeholder"></div>
+                    {% endif %}
+                </div>
+                <div class="lesson-card-body">
+                    <h3 class="lesson-card-title">{{ item.lesson.title }}</h3>
+                    <div class="lesson-card-footer">
+                        <a href="{% url 'training:lesson_detail' item.lesson.id %}" class="btn btn-primary btn-sm">Пройти</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if page_obj.has_other_pages %}
+        <div class="pagination" id="lessons-pagination" data-module-id="{{ module.id }}">
+            {% if page_obj.has_previous %}
+            <a href="#" class="pagination-btn pagination-prev" data-page="{{ page_obj.previous_page_number }}">← Назад</a>
+            {% else %}
+            <span class="pagination-btn pagination-prev disabled">← Назад</span>
+            {% endif %}
+
+            <div class="pagination-numbers">
+                {% if page_obj.number > 2 %}
+                <a href="#" class="pagination-num" data-page="1">1</a>
+                {% if page_obj.number > 3 %}
+                <span class="pagination-dots">...</span>
+                {% endif %}
+                {% endif %}
+
+                {% if page_obj.has_previous %}
+                <a href="#" class="pagination-num" data-page="{{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+                {% endif %}
+
+                <span class="pagination-num active">{{ page_obj.number }}</span>
+
+                {% if page_obj.has_next %}
+                <a href="#" class="pagination-num" data-page="{{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+                {% endif %}
+
+                {% if page_obj.number < page_obj.paginator.num_pages|add:-1 %}
+                {% if page_obj.number < page_obj.paginator.num_pages|add:-2 %}
+                <span class="pagination-dots">...</span>
+                {% endif %}
+                <a href="#" class="pagination-num" data-page="{{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+                {% endif %}
+            </div>
+
+            {% if page_obj.has_next %}
+            <a href="#" class="pagination-btn pagination-next" data-page="{{ page_obj.next_page_number }}">Вперёд</a>
+            {% else %}
+            <span class="pagination-btn pagination-next disabled">Вперёд</span>
+            {% endif %}
+        </div>
+        {% endif %}
+    </section>
+
+    <div class="test-section">
+        <div class="test-cta">
+            <h3>Готовы проверить знания?</h3>
+            <p>После изучения всех уроков пройдите тест по модулю</p>
+            <a href="{% url 'testing:test_start' module.id %}" class="btn btn-accent btn-lg">Пройти тест</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const pagination = document.getElementById('lessons-pagination');
+    if (!pagination) return;
+
+    const grid = document.getElementById('lessons-grid');
+    const moduleId = pagination.dataset.moduleId;
+
+    function loadPage(page) {
+        const url = `/training/api/modules/${moduleId}/lessons/?page=${page}`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                grid.style.opacity = '0';
+                grid.style.transform = 'translateY(10px)';
+
+                setTimeout(() => {
+                    grid.innerHTML = '';
+
+                    if (data.lessons.length === 0) {
+                        grid.innerHTML = '<div class="empty-state"><p class="empty-text">Уроки пока не добавлены</p></div>';
+                        pagination.style.display = 'none';
+                    } else {
+                        data.lessons.forEach(lesson => {
+                            const card = createLessonCard(lesson);
+                            grid.appendChild(card);
+                        });
+                        pagination.style.display = data.num_pages > 1 ? 'flex' : 'none';
+                        updatePagination(data);
+                    }
+                    grid.style.opacity = '1';
+                    grid.style.transform = 'translateY(0)';
+                }, 200);
+            });
+    }
+
+    function createLessonCard(lesson) {
+        const div = document.createElement('div');
+        div.className = 'lesson-card' + (lesson.completed ? ' completed' : '');
+
+        let imageHtml = lesson.image
+            ? `<img src="${lesson.image}" alt="${lesson.title}">`
+            : '<div class="lesson-card-placeholder"></div>';
+
+        let statusHtml = lesson.completed
+            ? '<span class="lesson-card-status">Пройден</span>'
+            : '';
+
+        div.innerHTML = `
+            <div class="lesson-card-number">${lesson.number}</div>
+            <div class="lesson-card-image">
+                ${statusHtml}
+                ${imageHtml}
+            </div>
+            <div class="lesson-card-body">
+                <h3 class="lesson-card-title">${lesson.title}</h3>
+                <div class="lesson-card-footer">
+                    <a href="/training/lessons/${lesson.id}/" class="btn btn-primary btn-sm">Пройти</a>
+                </div>
+            </div>
+        `;
+        return div;
+    }
+
+    function updatePagination(data) {
+        const numbersDiv = pagination.querySelector('.pagination-numbers');
+        const prevBtn = pagination.querySelector('.pagination-prev');
+        const nextBtn = pagination.querySelector('.pagination-next');
+
+        if (data.has_previous) {
+            prevBtn.classList.remove('disabled');
+            prevBtn.setAttribute('data-page', data.previous_page);
+        } else {
+            prevBtn.classList.add('disabled');
+        }
+
+        if (data.has_next) {
+            nextBtn.classList.remove('disabled');
+            nextBtn.setAttribute('data-page', data.next_page);
+        } else {
+            nextBtn.classList.add('disabled');
+        }
+
+        let html = '';
+
+        if (data.current_page > 2) {
+            html += `<a href="#" class="pagination-num" data-page="1">1</a>`;
+            if (data.current_page > 3) {
+                html += '<span class="pagination-dots">...</span>';
+            }
+        }
+
+        if (data.has_previous) {
+            html += `<a href="#" class="pagination-num" data-page="${data.previous_page}">${data.previous_page}</a>`;
+        }
+
+        html += `<span class="pagination-num active">${data.current_page}</span>`;
+
+        if (data.has_next) {
+            html += `<a href="#" class="pagination-num" data-page="${data.next_page}">${data.next_page}</a>`;
+        }
+
+        if (data.current_page < data.num_pages - 1) {
+            if (data.current_page < data.num_pages - 2) {
+                html += '<span class="pagination-dots">...</span>';
+            }
+            html += `<a href="#" class="pagination-num" data-page="${data.num_pages}">${data.num_pages}</a>`;
+        }
+
+        numbersDiv.innerHTML = html;
+    }
+
+    pagination.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = e.target.closest('[data-page]');
+        if (target && !target.classList.contains('disabled') && !target.classList.contains('active')) {
+            loadPage(target.dataset.page);
+        }
+    });
+
+    grid.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+});
+</script>
+{% endblock %}

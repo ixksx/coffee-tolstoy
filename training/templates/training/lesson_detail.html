@@ -1,0 +1,94 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ lesson.title }} – Толстой Coffee{% endblock %}
+
+{% block content %}
+<div class="container container-narrow">
+    
+    <div class="arrow-block">
+        <a href="{% url 'training:module_detail' lesson.module.id %}" class="back-link"><img src="{% static "images/arrow-left.svg" %}" class="icon-img"> Назад к модулю «{{ lesson.module.name }}»</a>
+    </div>
+    
+    <div class="lesson-header">
+        <span class="lesson-number-badge">Урок {{ lesson.number }}</span>
+        <h1 class="page-title">{{ lesson.title }}</h1>
+    </div>
+
+
+    {% if lesson.image %}
+    <div class="lesson-main-image">
+        <img src="{{ lesson.image.url }}" alt="{{ lesson.title }}">
+    </div>
+    {% endif %}
+
+
+    <div class="lesson-content">
+        {{ lesson.content|linebreaks }}
+    </div>
+
+
+    {% if images %}
+    <div class="lesson-gallery">
+        {% for img in images %}
+        <div class="gallery-item">
+            <img src="{{ img.image.url }}" alt="{{ img.caption }}">
+            {% if img.caption %}<p class="gallery-caption">{{ img.caption }}</p>{% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+
+    {% if files %}
+    <div class="lesson-files">
+        <h3 class="subsection-title">Файлы и инструкции</h3>
+        <div class="files-list">
+            {% for file in files %}
+            <a href="{{ file.file.url }}" class="file-link" download>
+                <span class="file-icon"></span>
+                <span class="file-name">{{ file.title }}</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+  
+    {% if lesson.practice_task %}
+    <div class="practice-section">
+        <h3 class="subsection-title">Практическое задание</h3>
+        <div class="practice-card">
+            <p>{{ lesson.practice_task|linebreaks }}</p>
+            <p class="practice-note">
+                <em>Выполните задание и покажите результат менеджеру или управляющему лично.</em>
+            </p>
+        </div>
+        {% if practice_grade %}
+        <div class="practice-grade-display">
+            <span class="grade-label">Ваша оценка:</span>
+            <span class="grade-value-large">{{ practice_grade.grade }}/10</span>
+            {% if practice_grade.comment %}
+            <p class="grade-comment">{{ practice_grade.comment }}</p>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {% if not progress or not progress.completed %}
+    <form method="post" class="complete-form">
+        {% csrf_token %}
+        <button type="submit" name="complete_lesson" class="btn btn-accent btn-lg btn-full">
+            Отметить урок как пройденный
+        </button>
+    </form>
+    {% else %}
+    <div class="completed-badge-large">
+        <span>Урок пройден</span>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+

@@ -1,0 +1,74 @@
+[
+    {
+        "model": "accounts.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$1200000$zJbmgartsldX3klsoqqVt8$mfgTgPNUrKNiaxMWxs9EZDJ6NhZl9E5bDzuB/TeKk2s=",
+            "last_login": "2026-05-21T09:39:59.402Z",
+            "is_superuser": true,
+            "username": "admin1",
+            "first_name": "Алексей",
+            "last_name": "",
+            "email": "admin1@gmail.com",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2026-05-13T17:06:33Z",
+            "role": "admin",
+            "must_change_password": false,
+            "avatar": "avatars/Starbucks.jpg",
+            "phone": "",
+            "bio": "",
+            "date_hired": null,
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "accounts.user",
+        "pk": 3,
+        "fields": {
+            "password": "pbkdf2_sha256$1200000$64HvYmgrwMfRtBYfkTPRNR$p5bcH8enAc8qu4vznYEGDBof3Ix0cRtotvcPNvpPqgg=",
+            "last_login": "2026-05-20T05:36:54.461Z",
+            "is_superuser": false,
+            "username": "anna05",
+            "first_name": "Анна",
+            "last_name": "Андреева",
+            "email": "annandr@gmail.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2026-05-13T18:03:22.407Z",
+            "role": "barista",
+            "must_change_password": false,
+            "avatar": "avatars/Без_названия_3.jpg",
+            "phone": "8 927 814-44-75",
+            "bio": "Люблю кофе",
+            "date_hired": null,
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "accounts.user",
+        "pk": 13,
+        "fields": {
+            "password": "pbkdf2_sha256$1200000$DVBCsC6f01Lrpu2PBNW6mh$UYoiJFx75ON+Tf8nuSBY8IZU50VHAso4NGBgcT++Rzo=",
+            "last_login": "2026-05-21T09:36:27.905Z",
+            "is_superuser": false,
+            "username": "anastasia23",
+            "first_name": "Анастасия",
+            "last_name": "Варченко",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2026-05-20T05:31:38.022Z",
+            "role": "cook",
+            "must_change_password": false,
+            "avatar": "",
+            "phone": "",
+            "bio": "",
+            "date_hired": null,
+            "groups": [],
+            "user_permissions": []
+        }
+    }
+]

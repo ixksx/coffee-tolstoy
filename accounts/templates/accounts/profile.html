@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Личный кабинет – Толстой Coffee{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="profile-header">
+        <div class="profile-avatar-section">
+            {% if user.avatar %}
+            <img src="{{ user.avatar.url }}" alt="Аватар" class="profile-avatar">
+            {% else %}
+            <div class="profile-avatar-placeholder">
+                {{ user.first_name|first }}{{ user.last_name|first }}
+            </div>
+            {% endif %}
+        </div>
+        <div class="profile-info">
+            <h1 class="profile-name">{{ user.get_full_name|default:user.username }}</h1>
+            <span class="profile-role-badge">{{ user.get_role_display }}</span>
+            {% if user.email %}<p class="profile-detail">{{ user.email }}</p>{% endif %}
+            {% if user.phone %}<p class="profile-detail">{{ user.phone }}</p>{% endif %}
+            {% if user.bio %}<p class="profile-bio">{{ user.bio }}</p>{% endif %}
+            <a href="{% url 'accounts:profile_edit' %}" class="btn btn-outline">Редактировать профиль</a>
+        </div>
+    </div>
+
+    {% if program %}
+    <section class="profile-section">
+        <h2 class="section-title">Прогресс обучения — {{ program.name }}</h2>
+        <div class="progress-grid">
+            {% for item in modules %}
+            <div class="progress-card">
+                <h3 class="progress-module-name">{{ item.module.name }}</h3>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: {{ item.percent }}%"></div>
+                </div>
+                <p class="progress-text">{{ item.percent }}% ({{ item.completed }}/{{ item.total }} уроков)</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+    <section class="profile-section">
+        <h2 class="section-title">Результаты тестов</h2>
+        {% if recent_tests %}
+        <div class="tests-list">
+            {% for attempt in recent_tests %}
+            <div class="test-result-card {% if attempt.is_passed %}passed{% else %}failed{% endif %}">
+                <div class="test-result-info">
+                    <h4>{{ attempt.test.title }}</h4>
+                    <p>Попытка {{ attempt.attempt_number }} • {{ attempt.started_at|date:"d.m.Y H:i" }}</p>
+                </div>
+                <div class="test-result-score">
+                    <span class="score-value">{{ attempt.score|floatformat:0 }}%</span>
+                    <span class="score-label">{% if attempt.is_passed %}Сдан{% else %}Не сдан{% endif %}</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if all_tests.count > 5 %}
+        <div class="expand-section" id="allTestsSection" style="display:none;">
+            {% for attempt in all_tests %}
+            {% if forloop.counter > 5 %}
+            <div class="test-result-card {% if attempt.is_passed %}passed{% else %}failed{% endif %}">
+                <div class="test-result-info">
+                    <h4>{{ attempt.test.title }}</h4>
+                    <p>Попытка {{ attempt.attempt_number }} • {{ attempt.started_at|date:"d.m.Y H:i" }}</p>
+                </div>
+                <div class="test-result-score">
+                    <span class="score-value">{{ attempt.score|floatformat:0 }}%</span>
+                    <span class="score-label">{% if attempt.is_passed %}Сдан{% else %}Не сдан{% endif %}</span>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <button class="btn btn-outline" onclick="toggleAllTests()">Показать все тесты</button>
+        {% endif %}
+        {% else %}
+        <p class="empty-text">Тесты ещё не пройдены</p>
+        {% endif %}
+    </section>
+
+    <section class="profile-section">
+        <h2 class="section-title">Оценки за практику</h2>
+        {% if practice_grades %}
+        <div class="grades-grid">
+            {% for pg in practice_grades %}
+            <div class="grade-card">
+                <h4>{{ pg.lesson.title }}</h4>
+                <div class="grade-value">{{ pg.grade }}<span class="grade-max">/10</span></div>
+                {% if pg.comment %}<p class="grade-comment">{{ pg.comment }}</p>{% endif %}
+                <p class="grade-date">{{ pg.graded_at|date:"d.m.Y" }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="empty-text">Оценки за практику пока не выставлены</p>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function toggleAllTests() {
+        var section = document.getElementById('allTestsSection');
+        var btn = event.target;
+        if (section.style.display === 'none') {
+            section.style.display = 'block';
+            btn.textContent = 'Скрыть';
+        } else {
+            section.style.display = 'none';
+            btn.textContent = 'Показать все тесты';
+        }
+    }
+</script>
+{% endblock %}

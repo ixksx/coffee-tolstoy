@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Тест: {{ test.title }} – Толстой Coffee{% endblock %}
+
+{% block content %}
+<div class="container container-narrow">
+    <div class="arrow-block">
+        <a href="{% url 'training:module_detail' module.id %}" class="back-link"><img src="{% static "images/arrow-left.svg" %}" class="icon-img"> Назад к модулю</a>
+    </div>
+    
+    <div class="test-start-card">
+        <h1 class="page-title">{{ test.title }}</h1>
+        {% if test.description %}
+        <p class="test-description">{{ test.description }}</p>
+        {% endif %}
+
+        <div class="test-info-grid">
+            <div class="test-info-item">
+                <span class="info-label">Вопросов</span>
+                <span class="info-value">{{ test.questions.count }}</span>
+            </div>
+            <div class="test-info-item">
+                <span class="info-label">Время</span>
+                <span class="info-value">{{ test.time_limit_minutes }} мин</span>
+            </div>
+            <div class="test-info-item">
+                <span class="info-label">Попыток использовано</span>
+                <span class="info-value">{{ attempt_count }}/2</span>
+            </div>
+            <div class="test-info-item">
+                <span class="info-label">Проходной балл</span>
+                <span class="info-value">80%</span>
+            </div>
+        </div>
+
+        {% if is_already_passed %}
+        <div class="test-status-badge passed">Тест сдан</div>
+        {% endif %}
+
+        {% if is_locked %}
+        <div class="test-locked">
+            <h3>Тест заблокирован</h3>
+            <p>Вы исчерпали попытки. Тест будет доступен {{ locked_until|date:"d.m.Y в H:i" }}</p>
+        </div>
+        {% elif attempt_count < 2 or is_already_passed %}
+        <a href="{% url 'testing:test_take' module.id %}" class="btn btn-accent btn-lg btn-full">
+            {% if is_already_passed %}Пройти ещё раз{% else %}Начать тест{% endif %}
+        </a>
+        {% endif %}
+
+        <!-- История попыток -->
+        {% if attempts %}
+        <div class="attempts-history">
+            <h3 class="subsection-title">История попыток</h3>
+            {% for attempt in attempts %}
+            <div class="attempt-card {% if attempt.is_passed %}passed{% else %}failed{% endif %}">
+                <div class="attempt-info">
+                    <span class="attempt-number">Попытка {{ attempt.attempt_number }}</span>
+                    <span class="attempt-date">{{ attempt.started_at|date:"d.m.Y H:i" }}</span>
+                </div>
+                <div class="attempt-result">
+                    <span class="attempt-score">{{ attempt.score|floatformat:0 }}%</span>
+                    <span class="attempt-status">
+                        {% if attempt.is_passed %}Сдан{% else %}Не сдан{% endif %}
+                    </span>
+                </div>
+                <a href="{% url 'testing:test_result' attempt.id %}" class="btn btn-outline btn-sm">Подробнее</a>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

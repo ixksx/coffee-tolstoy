@@ -1,0 +1,43 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Новый модуль – {{ program.name }}{% endblock %}
+
+{% block content %}
+<div class="container container-narrow">
+    <div class="arrow-block">
+         <a href="{% url 'dashboard:program_edit' program.id %}" class="back-link"><img src="{% static "images/arrow-left.svg" %}" class="icon-img"> Назад к программе</a>
+    </div>
+   
+    <h1 class="page-title">Новый модуль для «{{ program.name }}»</h1>
+
+    <form method="post" enctype="multipart/form-data" class="edit-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="form-label">Название</label>
+            <input type="text" name="name" class="form-input" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Описание</label>
+            <textarea name="description" class="form-textarea" rows="4"></textarea>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Цель модуля</label>
+            <textarea name="goal" class="form-textarea" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Номер модуля</label>
+            <input type="number" name="order" class="form-input" value="1" min="1">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Изображение</label>
+            <input type="file" name="image" class="form-file" accept="image/*">
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Создать</button>
+            <a href="{% url 'dashboard:program_edit' program.id %}" class="btn btn-outline">Отмена</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

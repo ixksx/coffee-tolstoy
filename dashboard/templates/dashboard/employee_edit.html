@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Редактировать: {{ employee.get_full_name }}{% endblock %}
+
+{% block content %}
+<div class="container container-narrow">
+    <div class="arrow-block">
+        <a href="{% url 'dashboard:employee_detail' employee.id %}" class="back-link"><img src="{% static "images/arrow-left.svg" %}" class="icon-img"> Назад</a>
+    </div>
+    
+    <h1 class="page-title">Редактировать сотрудника</h1>
+
+    <form method="post" class="edit-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="form-label">Имя</label>
+            <input type="text" name="first_name" class="form-input" value="{{ employee.first_name }}">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Фамилия</label>
+            <input type="text" name="last_name" class="form-input" value="{{ employee.last_name }}">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" name="email" class="form-input" value="{{ employee.email }}">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Телефон</label>
+            <input type="text" name="phone" class="form-input" value="{{ employee.phone }}">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Роль</label>
+            <select name="role" class="form-select">
+                {% for value, label in roles %}
+                <option value="{{ value }}" {% if employee.role == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Новый пароль (оставьте пустым, если не меняете)</label>
+            <input type="text" name="new_password" class="form-input">
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <a href="{% url 'dashboard:employee_detail' employee.id %}" class="btn btn-outline">Отмена</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

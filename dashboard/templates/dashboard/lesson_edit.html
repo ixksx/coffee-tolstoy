@@ -1,0 +1,87 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ lesson.title }} – Редактирование{% endblock %}
+
+{% block content %}
+<div class="container container-narrow">
+    <div class="arrow-block">
+        <a href="{% url 'dashboard:module_edit' lesson.module.id %}" class="back-link"><img src="{% static "images/arrow-left.svg" %}" class="icon-img"> Назад к модулю</a>
+    </div>
+    
+    <h1 class="page-title">Редактировать: {{ lesson.title }}</h1>
+
+    <form method="post" enctype="multipart/form-data" class="edit-form">
+        {% csrf_token %}
+        <div class="form-group form-group-sm">
+            <label class="form-label">Номер урока</label>
+            <input type="number" name="number" class="form-input" value="{{ lesson.number }}">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Название</label>
+            <input type="text" name="title" class="form-input" value="{{ lesson.title }}">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Изображение</label>
+            <input type="file" name="image" class="form-file" accept="image/*">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Материал урока</label>
+            <textarea name="content" class="form-textarea" rows="10">{{ lesson.content }}</textarea>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Практическое задание</label>
+            <textarea name="practice_task" class="form-textarea" rows="4">{{ lesson.practice_task }}</textarea>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Добавить файлы</label>
+            <input type="file" name="files" class="form-file" multiple>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Добавить изображения</label>
+            <input type="file" name="extra_images" class="form-file" multiple accept="image/*">
+        </div>
+
+        {% if files %}
+        <div class="attached-section">
+            <h3 class="subsection-title">Прикреплённые файлы</h3>
+            <div class="attached-files">
+                {% for f in files %}
+                <div class="attached-item">
+                    <div class="attached-file-info">
+                        <span class="attached-file-icon">📄</span>
+                        <span class="attached-file-name">{{ f.title }}</span>
+                    </div>
+                    <div class="attached-item-actions">
+                        <a href="{% url 'dashboard:lesson_file_delete' f.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Удалить файл?')">Удалить</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if images %}
+        <div class="attached-section">
+            <h3 class="subsection-title">Прикреплённые изображения</h3>
+            <div class="attached-images">
+                {% for img in images %}
+                <div class="attached-image-item">
+                    <img src="{{ img.image.url }}" alt="{{ img.caption|default:'' }}" class="attached-image-preview">
+                    <div class="attached-image-actions">
+                        <a href="{% url 'dashboard:lesson_image_delete' img.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Удалить изображение?')">Удалить</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <a href="{% url 'dashboard:module_edit' lesson.module.id %}" class="btn btn-outline">Отмена</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

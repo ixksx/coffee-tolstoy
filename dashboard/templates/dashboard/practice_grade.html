@@ -1,0 +1,48 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Оценка за практику{% endblock %}
+
+{% block content %}
+<div class="container container-narrow">
+    <div class="arrow-block">
+        <a href="{% url 'dashboard:employee_detail' employee.id %}" class="back-link"><img src="{% static "images/arrow-left.svg" %}" class="icon-img"> Назад к сотруднику</a>
+    </div>
+    <h1 class="page-title">Оценка за практику</h1>
+
+    <div class="grade-form-info">
+        <p><strong>Сотрудник:</strong> {{ employee.get_full_name }}</p>
+        <p><strong>Урок:</strong> {{ lesson.title }}</p>
+        {% if lesson.practice_task %}
+        <div class="practice-task-preview">
+            <h3>Задание:</h3>
+            <p>{{ lesson.practice_task }}</p>
+        </div>
+        {% endif %}
+    </div>
+
+    {% if grade_obj %}
+    <div class="current-grade">
+        <p>Текущая оценка: <strong>{{ grade_obj.grade }}/10</strong></p>
+    </div>
+    {% endif %}
+
+    <form method="post" class="edit-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="form-label">Оценка (1-10)</label>
+            <input type="number" name="grade" class="form-input" min="1" max="10"
+                   value="{{ grade_obj.grade|default:'' }}" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Комментарий</label>
+            <textarea name="comment" class="form-textarea" rows="3">{{ grade_obj.comment|default:'' }}</textarea>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Выставить оценку</button>
+            <a href="{% url 'dashboard:employee_detail' employee.id %}" class="btn btn-outline">Отмена</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

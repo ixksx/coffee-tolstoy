@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Добавить сотрудника – Панель управления{% endblock %}
+
+{% block content %}
+<div class="container container-narrow">
+    <div class="arrow-block">
+        <a href="{% url 'dashboard:employee_list' %}" class="back-link"><img src="{% static "images/arrow-left.svg" %}" class="icon-img"> Назад к списку</a>
+    </div>
+    
+    <h1 class="page-title">Добавить сотрудника</h1>
+
+    <form method="post" class="edit-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="form-label">Имя</label>
+            <input type="text" name="first_name" class="form-input" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Фамилия</label>
+            <input type="text" name="last_name" class="form-input" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Логин</label>
+            <input type="text" name="username" class="form-input" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Роль</label>
+            <select name="role" class="form-select">
+                {% for value, label in roles %}
+                {% if value != 'admin' %}
+                <option value="{{ value }}">{{ label }}</option>
+                {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Временный пароль</label>
+            <input type="text" name="password" class="form-input" required>
+            <p class="form-hint">Сотрудник сменит пароль при первом входе</p>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Создать</button>
+            <a href="{% url 'dashboard:employee_list' %}" class="btn btn-outline">Отмена</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

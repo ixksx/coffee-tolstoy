@@ -1,0 +1,92 @@
+<!-- Подробная статистика сотрудника -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ employee.get_full_name }} – Статистика{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="arrow-block">
+        <a href="{% url 'dashboard:employee_list' %}" class="back-link"><img src="{% static "images/arrow-left.svg" %}" class="icon-img"> Назад к списку</a>
+    </div>
+    
+
+    <div class="profile-header">
+        <div class="profile-info">
+            <h1 class="profile-name">{{ employee.get_full_name|default:employee.username }}</h1>
+            <span class="profile-role-badge">{{ employee.get_role_display }}</span>
+            <a href="{% url 'dashboard:employee_edit' employee.id %}" class="btn btn-outline btn-sm">Редактировать</a>
+        </div>
+    </div>
+
+    {% if program %}
+    <section class="profile-section">
+        <h2 class="section-title">Прогресс — {{ program.name }}</h2>
+        {% for item in modules_progress %}
+        <div class="module-progress-card">
+            <div class="module-progress-header">
+                <h3>{{ item.module.name }}</h3>
+                <span class="progress-percent">{{ item.percent }}%</span>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar" style="width: {{ item.percent }}%"></div>
+            </div>
+            <p class="progress-detail">{{ item.done }}/{{ item.total }} уроков</p>
+
+            {% if item.test_attempts %}
+            <div class="test-attempts-mini">
+                <h4>Тесты:</h4>
+                {% for attempt in item.test_attempts %}
+                <div class="attempt-mini {% if attempt.is_passed %}passed{% else %}failed{% endif %}">
+                    Попытка {{ attempt.attempt_number }}: {{ attempt.score|floatformat:0 }}%
+                    ({% if attempt.is_passed %}Сдан{% else %}Не сдан{% endif %})
+                    {% if attempt.time_spent %} — {{ attempt.time_spent }}{% endif %}
+                    <a href="{% url 'testing:test_result' attempt.id %}" class="link-sm">Подробнее</a>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="practice-grades-admin">
+                {% for lesson in item.module.lessons.all %}
+                {% if lesson.practice_task %}
+                <a href="{% url 'dashboard:practice_grade' employee.id lesson.id %}" class="btn btn-outline btn-sm">
+                    Оценить: {{ lesson.title }}
+                </a>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </section>
+    {% endif %}
+
+    {% if practice_grades %}
+    <section class="profile-section">
+        <h2 class="section-title">Оценки за практику</h2>
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Урок</th>
+                        <th>Оценка</th>
+                        <th>Комментарий</th>
+                        <th>Дата</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pg in practice_grades %}
+                    <tr>
+                        <td>{{ pg.lesson.title }}</td>
+                        <td>{{ pg.grade }}/10</td>
+                        <td>{{ pg.comment|default:"—" }}</td>
+                        <td>{{ pg.graded_at|date:"d.m.Y" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+    {% endif %}
+</div>
+{% endblock %}

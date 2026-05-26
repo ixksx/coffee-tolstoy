@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Сотрудники – Панель управления{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="arrow-block">
+        <a href="{% url 'dashboard:index' %}" class="back-link"><img src="{% static "images/arrow-left.svg" %}" class="icon-img">Назад к панели управлениия</a>
+    </div>
+    <div class="page-header">
+        <h1 class="page-title">Сотрудники</h1>
+        <a href="{% url 'dashboard:employee_create' %}" class="btn btn-primary">Добавить сотрудника</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Имя</th>
+                    <th>Логин</th>
+                    <th>Роль</th>
+                    <th>Статус пароля</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for emp in employees %}
+                <tr>
+                    <td>{{ emp.get_full_name|default:emp.username }}</td>
+                    <td>{{ emp.username }}</td>
+                    <td><span class="role-badge">{{ emp.get_role_display }}</span></td>
+                    <td>
+                        {% if emp.must_change_password %}
+                        <span class="status-badge pending">Временный</span>
+                        {% else %}
+                        <span class="status-badge active">Активен</span>
+                        {% endif %}
+                    </td>
+                    <td class="actions-cell">
+                        <a href="{% url 'dashboard:employee_detail' emp.id %}" class="btn btn-outline btn-sm"><img src="{% static "images/statistics.svg" %}" class="icon-actions-img"></a>
+                        <a href="{% url 'dashboard:employee_edit' emp.id %}" class="btn btn-outline btn-sm"><img src="{% static "images/pencil.svg" %}" class="icon-actions-img"></a>
+                        <a href="{% url 'dashboard:employee_delete' emp.id %}" class="btn btn-outline btn-sm"><img src="{% static "images/trash.svg" %}" class="icon-actions-img"></a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="5" class="empty-text">Сотрудников нет</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,515 @@
+[
+    {
+        "model": "testing.answer",
+        "pk": 5,
+        "fields": {
+            "question": 2,
+            "text": "«3 шага»",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 6,
+        "fields": {
+            "question": 2,
+            "text": "«5 шагов»",
+            "is_correct": true
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 7,
+        "fields": {
+            "question": 2,
+            "text": "«7 шагов»",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 8,
+        "fields": {
+            "question": 2,
+            "text": "«10 шагов»",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 9,
+        "fields": {
+            "question": 3,
+            "text": "5 минут",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 10,
+        "fields": {
+            "question": 3,
+            "text": "15 минут",
+            "is_correct": true
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 11,
+        "fields": {
+            "question": 3,
+            "text": "30 минут",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 12,
+        "fields": {
+            "question": 3,
+            "text": "За час",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 13,
+        "fields": {
+            "question": 4,
+            "text": "1 минута",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 14,
+        "fields": {
+            "question": 4,
+            "text": "3 минуты",
+            "is_correct": true
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 15,
+        "fields": {
+            "question": 4,
+            "text": "5 минут",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 16,
+        "fields": {
+            "question": 4,
+            "text": "10 минут",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 81,
+        "fields": {
+            "question": 1,
+            "text": "2017",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 82,
+        "fields": {
+            "question": 1,
+            "text": "2019",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 83,
+        "fields": {
+            "question": 1,
+            "text": "2020",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 84,
+        "fields": {
+            "question": 1,
+            "text": "2015",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 85,
+        "fields": {
+            "question": 1,
+            "text": "2023",
+            "is_correct": true
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 94,
+        "fields": {
+            "question": 21,
+            "text": "В начале смены",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 95,
+        "fields": {
+            "question": 21,
+            "text": "После каждого перерыва и загрязнения",
+            "is_correct": true
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 96,
+        "fields": {
+            "question": 21,
+            "text": "Раз в час",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 97,
+        "fields": {
+            "question": 21,
+            "text": "Только при смене продуктов",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 98,
+        "fields": {
+            "question": 22,
+            "text": "Мягкий",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 99,
+        "fields": {
+            "question": 22,
+            "text": "Хрустящий, золотистый",
+            "is_correct": true
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 100,
+        "fields": {
+            "question": 22,
+            "text": "Бледный",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 101,
+        "fields": {
+            "question": 22,
+            "text": "Влажный",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 102,
+        "fields": {
+            "question": 23,
+            "text": "Комнатной",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 103,
+        "fields": {
+            "question": 23,
+            "text": "0..+5°C",
+            "is_correct": true
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 104,
+        "fields": {
+            "question": 23,
+            "text": "-18°C",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 105,
+        "fields": {
+            "question": 23,
+            "text": "+10..+15°C",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 106,
+        "fields": {
+            "question": 24,
+            "text": "Взбитыми сливками",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 107,
+        "fields": {
+            "question": 24,
+            "text": "Ягодами и мятой",
+            "is_correct": true
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 108,
+        "fields": {
+            "question": 24,
+            "text": "Шоколадной стружкой",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 109,
+        "fields": {
+            "question": 24,
+            "text": "Орехами",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 110,
+        "fields": {
+            "question": 25,
+            "text": "Чистая форма",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 111,
+        "fields": {
+            "question": 25,
+            "text": "Отсутствие украшений на руках",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 112,
+        "fields": {
+            "question": 25,
+            "text": "Короткие ногти",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 113,
+        "fields": {
+            "question": 25,
+            "text": "Мобильный телефон на столе",
+            "is_correct": true
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 114,
+        "fields": {
+            "question": 26,
+            "text": "Микроволновка",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 115,
+        "fields": {
+            "question": 26,
+            "text": "Панини-пресс",
+            "is_correct": true
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 116,
+        "fields": {
+            "question": 26,
+            "text": "Духовка",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 117,
+        "fields": {
+            "question": 26,
+            "text": "Пароварка",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 118,
+        "fields": {
+            "question": 27,
+            "text": "За час до подачи",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 119,
+        "fields": {
+            "question": 27,
+            "text": "Сразу после нарезки",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 120,
+        "fields": {
+            "question": 27,
+            "text": "Перед подачей",
+            "is_correct": true
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 121,
+        "fields": {
+            "question": 27,
+            "text": "За день",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 122,
+        "fields": {
+            "question": 28,
+            "text": "8 часов",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 123,
+        "fields": {
+            "question": 28,
+            "text": "24 часа",
+            "is_correct": true
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 124,
+        "fields": {
+            "question": 28,
+            "text": "48 часов",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 125,
+        "fields": {
+            "question": 28,
+            "text": "Неделю",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 126,
+        "fields": {
+            "question": 29,
+            "text": "50°C",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 127,
+        "fields": {
+            "question": 29,
+            "text": "70°C",
+            "is_correct": true
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 128,
+        "fields": {
+            "question": 29,
+            "text": "90°C",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 129,
+        "fields": {
+            "question": 29,
+            "text": "Комнатная",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 130,
+        "fields": {
+            "question": 30,
+            "text": "В кастрюле на плите",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 131,
+        "fields": {
+            "question": 30,
+            "text": "В микроволновке для порции",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 132,
+        "fields": {
+            "question": 30,
+            "text": "В сотейнике",
+            "is_correct": false
+        }
+    },
+    {
+        "model": "testing.answer",
+        "pk": 133,
+        "fields": {
+            "question": 30,
+            "text": "В СВЧ-печи для целой кастрюли",
+            "is_correct": true
+        }
+    }
+]

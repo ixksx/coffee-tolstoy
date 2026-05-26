@@ -1,0 +1,53 @@
+[
+    {
+        "model": "testing.testattempt",
+        "pk": 8,
+        "fields": {
+            "user": 3,
+            "test": 6,
+            "attempt_number": 2,
+            "score": 0.0,
+            "total_questions": 0,
+            "correct_answers": 0,
+            "is_passed": false,
+            "is_completed": true,
+            "started_at": "2026-05-20T05:38:35.855Z",
+            "completed_at": "2026-05-20T05:38:43.815Z",
+            "locked_until": "2026-05-27T05:38:43.815Z"
+        }
+    },
+    {
+        "model": "testing.testattempt",
+        "pk": 9,
+        "fields": {
+            "user": 13,
+            "test": 7,
+            "attempt_number": 1,
+            "score": 20.0,
+            "total_questions": 5,
+            "correct_answers": 1,
+            "is_passed": false,
+            "is_completed": true,
+            "started_at": "2026-05-20T12:35:40.305Z",
+            "completed_at": "2026-05-20T12:36:22.349Z",
+            "locked_until": null
+        }
+    },
+    {
+        "model": "testing.testattempt",
+        "pk": 10,
+        "fields": {
+            "user": 13,
+            "test": 7,
+            "attempt_number": 2,
+            "score": 100.0,
+            "total_questions": 5,
+            "correct_answers": 5,
+            "is_passed": true,
+            "is_completed": true,
+            "started_at": "2026-05-21T09:37:45.659Z",
+            "completed_at": "2026-05-21T09:37:58.904Z",
+            "locked_until": null
+        }
+    }
+]

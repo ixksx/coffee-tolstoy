@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Результат теста – Толстой Coffee{% endblock %}
+
+{% block content %}
+<div class="container container-narrow">
+    <div class="test-result-page">
+        <div class="result-hero {% if attempt.is_passed %}result-passed{% else %}result-failed{% endif %}">
+            <h1 class="result-title">
+                {% if attempt.is_passed %}Тест сдан!{% else %}Тест не сдан{% endif %}
+            </h1>
+            <div class="result-score-large">{{ attempt.score|floatformat:0 }}%</div>
+        </div>
+
+        <div class="result-details">
+            <div class="result-detail-item">
+                <span class="detail-label">Тест</span>
+                <span class="detail-value">{{ attempt.test.title }}</span>
+            </div>
+            <div class="result-detail-item">
+                <span class="detail-label">Попытка</span>
+                <span class="detail-value">{{ attempt.attempt_number }}</span>
+            </div>
+            <div class="result-detail-item">
+                <span class="detail-label">Правильных ответов</span>
+                <span class="detail-value">{{ attempt.correct_answers }} из {{ attempt.total_questions }}</span>
+            </div>
+            <div class="result-detail-item">
+                <span class="detail-label">Ошибок</span>
+                <span class="detail-value">{{ attempt.errors_count }}</span>
+            </div>
+            {% if attempt.time_spent %}
+            <div class="result-detail-item">
+                <span class="detail-label">Время</span>
+                <span class="detail-value">{{ attempt.time_spent }}</span>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="result-answers">
+            <h2 class="section-title">Разбор ответов</h2>
+            {% for ua in user_answers %}
+            <div class="answer-review {% if ua.is_correct %}correct{% else %}incorrect{% endif %}">
+                <div class="review-status">
+                    {% if ua.is_correct %}✓{% else %}✗{% endif %}
+                </div>
+                <div class="review-content">
+                    <p class="review-question">{{ ua.question.text }}</p>
+                    <p class="review-answer">Ваш ответ: {{ ua.selected_answer.text }}</p>
+                    {% if not ua.is_correct %}
+                    <p class="review-correct">
+                        Правильный ответ:
+                        {% for ans in ua.question.answers.all %}
+                            {% if ans.is_correct %}{{ ans.text }}{% endif %}
+                        {% endfor %}
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="result-actions">
+            <a href="{% url 'testing:test_start' attempt.test.module.id %}" class="btn btn-primary">К тесту</a>
+            <a href="{% url 'training:modules' %}" class="btn btn-outline">К модулям</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

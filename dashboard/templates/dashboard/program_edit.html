@@ -1,0 +1,63 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ program.name }} – Редактирование{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="arrow-block">
+        <a href="{% url 'dashboard:program_list' %}" class="back-link"><img src="{% static "images/arrow-left.svg" %}" class="icon-img"> Назад к программам</a>
+    </div>
+    
+    <h1 class="page-title">{{ program.name }}</h1>
+
+    <form method="post" enctype="multipart/form-data" class="edit-form">
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label">Название</label>
+                <input type="text" name="name" class="form-input" value="{{ program.name }}">
+            </div>
+            <div class="form-group form-group-sm">
+                <label class="form-label">Номер программы</label>
+                <input type="number" name="order" class="form-input" value="{{ program.order }}" min="1">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Описание</label>
+            <textarea name="description" class="form-textarea" rows="4">{{ program.description }}</textarea>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Изображение</label>
+            <input type="file" name="image" class="form-file" accept="image/*">
+        </div>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
+
+
+    <section class="dashboard-section">
+        <div class="section-header">
+            <h2 class="section-title">Модули</h2>
+            <a href="{% url 'dashboard:module_create' program.id %}" class="btn btn-primary btn-sm">Добавить модуль</a>
+        </div>
+        <div class="modules-admin-list">
+            {% for module in program.modules.all %}
+            <div class="module-admin-card">
+                <div class="module-admin-info">
+                    <span class="module-order">{{ module.order }}</span>
+                    <h3>{{ module.name }}</h3>
+                    <span class="module-lessons-count">{{ module.lessons.count }} уроков</span>
+                </div>
+                <div class="module-admin-actions">
+                    <a href="{% url 'dashboard:module_edit' module.id %}" class="btn btn-outline btn-sm"><img src="{% static "images/pencil.svg" %}" class="icon-actions-img"></a>
+                    <a href="{% url 'dashboard:module_delete' module.id %}" class="btn btn-outline btn-sm"><img src="{% static "images/trash.svg" %}" class="icon-actions-img"></a>
+                </div>
+            </div>
+            {% empty %}
+            <p class="empty-text">Модулей пока нет</p>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+[
+    {
+        "model": "training.lessonprogress",
+        "pk": 3,
+        "fields": {
+            "user": 3,
+            "lesson": 14,
+            "completed": true,
+            "completed_at": "2026-05-15T02:41:09.738Z"
+        }
+    },
+    {
+        "model": "training.lessonprogress",
+        "pk": 4,
+        "fields": {
+            "user": 3,
+            "lesson": 15,
+            "completed": true,
+            "completed_at": "2026-05-20T05:37:52.645Z"
+        }
+    },
+    {
+        "model": "training.lessonprogress",
+        "pk": 6,
+        "fields": {
+            "user": 13,
+            "lesson": 25,
+            "completed": true,
+            "completed_at": "2026-05-21T09:37:18.006Z"
+        }
+    }
+]

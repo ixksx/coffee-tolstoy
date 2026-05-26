@@ -1,0 +1,62 @@
+
+{% extends "base.html" %}
+
+{% block title %}{{ test.title }} – Тестирование{% endblock %}
+
+{% block content %}
+<div class="container container-narrow">
+    <div class="test-header">
+        <h1 class="page-title">{{ test.title }}</h1>
+        <div class="test-timer" id="testTimer">
+            <span id="timerDisplay">{{ test.time_limit_minutes }}:00</span>
+        </div>
+    </div>
+
+    <form method="post" id="testForm" class="test-form">
+        {% csrf_token %}
+        {% for question in questions %}
+        <div class="question-card">
+            <div class="question-number">Вопрос {{ forloop.counter }} из {{ questions|length }}</div>
+            <h3 class="question-text">{{ question.text }}</h3>
+            <div class="answers-list">
+                {% for answer in question.answers.all %}
+                <label class="answer-option">
+                    <input type="radio"
+                           name="question_{{ question.id }}"
+                           value="{{ answer.id }}"
+                           required>
+                    <span class="answer-radio"></span>
+                    <span class="answer-text">{{ answer.text }}</span>
+                </label>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+
+        <button type="submit" class="btn btn-accent btn-lg btn-full">Завершить тест</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    let timeLeft = {{ test.time_limit_minutes }} * 60;
+    const timerDisplay = document.getElementById('timerDisplay');
+
+    const timerInterval = setInterval(function() {
+        timeLeft--;
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        timerDisplay.textContent = minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+
+        if (timeLeft <= 60) {
+            timerDisplay.style.color = '#D87824';
+        }
+
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            document.getElementById('testForm').submit();
+        }
+    }, 1000);
+</script>
+{% endblock %}

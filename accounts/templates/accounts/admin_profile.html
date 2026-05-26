@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Профиль администратора – Толстой Coffee{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="profile-header">
+        <div class="profile-avatar-section">
+            {% if user.avatar %}
+            <img src="{{ user.avatar.url }}" alt="Аватар" class="profile-avatar">
+            {% else %}
+            <div class="profile-avatar-placeholder admin-avatar">
+                {{ user.first_name|first }}{{ user.last_name|first }}
+            </div>
+            {% endif %}
+        </div>
+        <div class="profile-info">
+            <h1 class="profile-name">{{ user.get_full_name|default:user.username }}</h1>
+            <span class="profile-role-badge admin-badge">Администратор</span>
+            <a href="{% url 'accounts:profile_edit' %}" class="btn btn-outline">Редактировать профиль</a>
+        </div>
+    </div>
+
+    <section class="profile-section">
+        <h2 class="section-title">Общая статистика</h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">{{ total_employees }}</div>
+                <div class="stat-label">Сотрудников</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ completed_count }}</div>
+                <div class="stat-label">Завершили обучение</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ avg_score }}%</div>
+                <div class="stat-label">Средний балл</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="profile-section">
+        <h2 class="section-title">Сотрудники</h2>
+        <div class="employees-list">
+            {% for emp in employees %}
+            <a href="{% url 'dashboard:employee_detail' emp.id %}" class="employee-card-link">
+                <div class="employee-card">
+                    <div class="employee-name">{{ emp.get_full_name|default:emp.username }}</div>
+                    <span class="employee-role">{{ emp.get_role_display }}</span>
+                </div>
+            </a>
+            {% empty %}
+            <p class="empty-text">Сотрудников пока нет</p>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}

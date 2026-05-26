@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Толстой Coffee{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    {% if user.is_authenticated and not user.must_change_password or user.is_admin %}
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{% url 'training:about' %}" class="nav-logo">
+                <img src="{% static "images/logo.svg" %}" class="logo-img">
+            </a>
+
+            <button class="burger-menu" id="burger-menu" aria-label="Меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <div class="nav-links" id="nav-links">
+                <a href="{% url 'training:about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">
+                    О нас
+                </a>
+                <a href="{% url 'training:modules' %}" class="nav-link {% if 'modules' in request.path or 'lessons' in request.path %}active{% endif %}">
+                    Модули
+                </a>
+                {% if user.is_admin %}
+                <a href="{% url 'dashboard:index' %}" class="nav-link {% if 'dashboard' in request.path %}active{% endif %}">
+                    Панель управления
+                </a>
+                <a href="{% url 'admin:index' %}" class="nav-link {% if 'django-admin' in request.path %}active{% endif %}">
+                    Админ-панель
+                </a>
+                {% endif %}
+            </div>
+
+
+            <div class="nav-user" id="nav-user">
+                <a href="{% url 'accounts:profile' %}" class="user-btn">
+                    <span class="user-name">{{ user.first_name|default:user.username }}</span>
+                    <span class="user-role">{{ user.get_role_display_short }}</span>
+                </a>
+                <a href="{% url 'accounts:logout' %}" class="logout-btn" title="Выйти">
+                    Выйти
+                </a>
+            </div>
+        </div>
+    </nav>
+    {% endif %}
+
+
+    {% if messages %}
+    <div class="messages-container">
+        {% for message in messages %}
+        <div class="message message-{{ message.tags }}">
+            <div class="message_txt">
+               {{ message }} 
+            </div>
+            <button class="message-close" onclick="this.parentElement.remove()">×</button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+
+    {% if user.is_authenticated and not user.must_change_password or user.is_admin %}
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <img src="{% static "images/logo.svg" %}" class="logo-img-footer">
+            </div>
+            <p class="footer-text">© 2026 Кофейня «Толстой». Платформа обучения персонала.</p>
+        </div>
+    </footer>
+    {% endif %}
+
+
+    {% block extra_js %}{% endblock %}
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const burger = document.getElementById('burger-menu');
+        const navLinks = document.getElementById('nav-links');
+        const navUser = document.getElementById('nav-user');
+
+        if (burger) {
+            burger.addEventListener('click', function() {
+                burger.classList.toggle('active');
+                navLinks.classList.toggle('open');
+                navUser.classList.toggle('open');
+            });
+        }
+    });
+    </script>
+</body>
+</html>

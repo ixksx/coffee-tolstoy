@@ -1,0 +1,57 @@
+[
+    {
+        "model": "training.program",
+        "pk": 1,
+        "fields": {
+            "name": "Стажёр-бариста",
+            "role": "trainee_barista",
+            "description": "Базовая программа для новых сотрудников. Вы узнаете основы работы в кофейне, познакомитесь с оборудованием и научитесь готовить базовые напитки.",
+            "image": "programs/Рейтинг_лучших_рожковых_кофемашин_-_экспертный_обзор_в_блоге_интернет-магазина__OdL0r95.jpg",
+            "created_at": "2026-01-15T10:00:00Z"
+        }
+    },
+    {
+        "model": "training.program",
+        "pk": 2,
+        "fields": {
+            "name": "Бариста",
+            "role": "barista",
+            "description": "Углублённая программа для бариста. Латте-арт, альтернативные методы заваривания, работа с зерном и клиентский сервис.",
+            "image": "programs/Без_названия_1_0vkD2zU.jpg",
+            "created_at": "2026-01-15T10:00:00Z"
+        }
+    },
+    {
+        "model": "training.program",
+        "pk": 3,
+        "fields": {
+            "name": "Старший бариста",
+            "role": "senior_barista",
+            "description": "Программа для опытных бариста. Управление сменой, обучение новичков, контроль качества и продвинутые техники.",
+            "image": "programs/Redirecting___.jpg",
+            "created_at": "2026-01-15T10:00:00Z"
+        }
+    },
+    {
+        "model": "training.program",
+        "pk": 4,
+        "fields": {
+            "name": "Повар",
+            "role": "cook",
+            "description": "Программа для поваров кофейни. Приготовление десертов, сэндвичей, работа с кухонным оборудованием и санитарные нормы.",
+            "image": "programs/Chef_Preparing_Dish.jpg",
+            "created_at": "2026-01-15T10:00:00Z"
+        }
+    },
+    {
+        "model": "training.program",
+        "pk": 5,
+        "fields": {
+            "name": "Менеджер",
+            "role": "manager",
+            "description": "Программа для менеджеров. Управление персоналом, финансовый учёт, маркетинг и развитие кофейни.",
+            "image": "programs/Ce_métier_payé_2500_par_mois_recrute_sans_diplôme_partout_en_France_et_la_forma_Q1liKoP.jpg",
+            "created_at": "2026-01-15T10:00:00Z"
+        }
+    }
+]

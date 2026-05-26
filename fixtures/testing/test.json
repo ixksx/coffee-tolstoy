@@ -1,0 +1,46 @@
+[
+    {
+        "model": "testing.test",
+        "pk": 1,
+        "fields": {
+            "module": 1,
+            "title": "Знакомство с кофейней",
+            "description": "Проверьте свои знания о кофейне «Толстой», правилах и стандартах обслуживания.",
+            "time_limit_minutes": 30,
+            "created_at": "2025-01-16T12:00:00Z"
+        }
+    },
+    {
+        "model": "testing.test",
+        "pk": 6,
+        "fields": {
+            "module": 6,
+            "title": "Управление сменой",
+            "description": "Проверьте знания об обязанностях старшего бариста.",
+            "time_limit_minutes": 30,
+            "created_at": "2025-01-21T12:00:00Z"
+        }
+    },
+    {
+        "model": "testing.test",
+        "pk": 7,
+        "fields": {
+            "module": 8,
+            "title": "Основы кулинарии для кофейни",
+            "description": "Проверьте знания основ кулинарии.",
+            "time_limit_minutes": 20,
+            "created_at": "2025-01-23T12:00:00Z"
+        }
+    },
+    {
+        "model": "testing.test",
+        "pk": 8,
+        "fields": {
+            "module": 9,
+            "title": "Десерты и выпечка",
+            "description": "Проверьте знания рецептур и технологии приготовления.",
+            "time_limit_minutes": 30,
+            "created_at": "2025-01-24T12:00:00Z"
+        }
+    }
+]

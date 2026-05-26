@@ -1,0 +1,101 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Панель управления – Толстой Coffee{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="page-title">Панель управления</h1>
+
+ 
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number">{{ total_employees }}</div>
+            <div class="stat-label">Сотрудников</div>
+        </div>
+        <div class="stat-card accent">
+            <div class="stat-number">{{ completed_count }}</div>
+            <div class="stat-label">Завершили обучение</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{{ avg_score }}%</div>
+            <div class="stat-label">Средний балл</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{{ total_programs }}</div>
+            <div class="stat-label">Программ</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{{ total_modules }}</div>
+            <div class="stat-label">Модулей</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{{ total_lessons }}</div>
+            <div class="stat-label">Уроков</div>
+        </div>
+    </div>
+
+  
+    <section class="dashboard-section">
+        <h2 class="section-title">Быстрые действия</h2>
+        <div class="actions-grid">
+            <a href="{% url 'dashboard:employee_create' %}" class="action-card">
+                <span class="action-icon"><img src="{% static "images/person_add.svg" %}" class="icon-fast-actions-img"></span>
+                <span class="action-text">Добавить сотрудника</span>
+            </a>
+            <a href="{% url 'dashboard:employee_list' %}" class="action-card">
+                <span class="action-icon"><img src="{% static "images/person.svg" %}" class="icon-fast-actions-img"></span>
+                <span class="action-text">Сотрудники</span>
+            </a>
+            <a href="{% url 'dashboard:program_list' %}" class="action-card">
+                <span class="action-icon"><img src="{% static "images/program.svg" %}" class="icon-fast-actions-img"></span>
+                <span class="action-text">Программы</span>
+            </a>
+            <a href="{% url 'training:modules' %}" class="action-card">
+                <span class="action-icon"><img src="{% static "images/modules.svg" %}" class="icon-fast-actions-img"></span>
+                <span class="action-text">Все модули</span>
+            </a>
+        </div>
+    </section>
+
+
+    <section class="dashboard-section">
+        <h2 class="section-title">Последние результаты тестов</h2>
+        {% if recent_attempts %}
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Сотрудник</th>
+                        <th>Тест</th>
+                        <th>Попытка</th>
+                        <th>Результат</th>
+                        <th>Статус</th>
+                        <th>Дата</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for attempt in recent_attempts %}
+                    <tr>
+                        <td>{{ attempt.user.get_full_name }}</td>
+                        <td>{{ attempt.test.title }}</td>
+                        <td>{{ attempt.attempt_number }}</td>
+                        <td>{{ attempt.score|floatformat:0 }}%</td>
+                        <td>
+                            <span class="status-badge {% if attempt.is_passed %}passed{% else %}failed{% endif %}">
+                                {% if attempt.is_passed %}Сдан{% else %}Не сдан{% endif %}
+                            </span>
+                        </td>
+                        <td>{{ attempt.completed_at|date:"d.m.Y H:i" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="empty-text">Попыток пока нет</p>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}

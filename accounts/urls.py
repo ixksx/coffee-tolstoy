@@ -1,0 +1,14 @@
+"""URL-маршруты приложения accounts."""
+
+from django.urls import path
+from . import views
+
+app_name = 'accounts'
+
+urlpatterns = [
+    path('login/', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
+    path('force-change-password/', views.force_change_password_view, name='force_change_password'),
+    path('profile/', views.profile_view, name='profile'),
+    path('profile/edit/', views.profile_edit_view, name='profile_edit'),
+]
