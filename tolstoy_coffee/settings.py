@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 import os
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +21,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-7g#19qp-!ao#$$%gf!tir@q(0zc*%ve60m3-n$!a-ou5z8l1#e'
+# SECRET_KEY = 'django-insecure-7g#19qp-!ao#$$%gf!tir@q(0zc*%ve60m3-n$!a-ou5z8l1#e'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-7g#19qp-!ao#$$%gf!tir@q(0zc*%ve60m3-n$!a-ou5z8l1#e')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['.onrender.com', '127.0.0.1']
 
 
 # Application definition
@@ -83,15 +85,21 @@ WSGI_APPLICATION = 'tolstoy_coffee.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'tolstoy_db',
+#         'USER': 'tolstoy_user',
+#         'PASSWORD': 'tolstoy_user',
+#         'HOST': 'localhost',  # или адрес сервера
+#         'PORT': '5432',
+#     }
+# }
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'tolstoy_db',
-        'USER': 'tolstoy_user',
-        'PASSWORD': 'tolstoy_user',
-        'HOST': 'localhost',  # или адрес сервера
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(
+        default='postgresql://localhost:5432/tolstoy_db',
+        conn_max_age=600
+    )
 }
 
 AUTH_USER_MODEL = 'accounts.User'
