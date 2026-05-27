@@ -97,7 +97,7 @@ WSGI_APPLICATION = 'tolstoy_coffee.wsgi.application'
 # }
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresql://localhost:5432/tolstoy_db',
+        default=os.environ.get('DATABASE_URL'),
         conn_max_age=600
     )
 }
